@@ -47,10 +47,9 @@ class FileTree:
         return self.find(path)
 
     def generate_fs_by(self, path):
-        real_root = os.path.realpath(path)
         for root, dirs, files in os.walk(path, topdown=False):
             for name in files:
-                # file_real_path = os.path.join(root[len(path) + 1:], name)
-                self.add_file_at(os.path.join(root[len(path) + 1:], name), os.path.join(root, name))
+                file_real_path = os.path.join(os.path.realpath(root), name)
+                self.add_file_at(os.path.join(root[len(path):], name), file_real_path)
             for name in dirs:
                 self.add_dir_at(os.path.join(root, name)[len(path):])
