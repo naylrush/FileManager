@@ -32,7 +32,7 @@ class FileTree:
         subdir = self.add_dir_at(path)
         subdir[name] = File(real_path)
 
-    def find_file(self, path):
+    def find(self, path):
         if path == '/':
             return self.files
         path = split_path(path)
@@ -42,6 +42,9 @@ class FileTree:
             if subdir is None:
                 return None
         return subdir
+
+    def __getitem__(self, path):
+        return self.find(path)
 
     def generate_fs_by(self, path):
         real_root = os.path.realpath(path)
