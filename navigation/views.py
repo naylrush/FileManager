@@ -1,9 +1,13 @@
 
 from django.shortcuts import render
+from navigation_files.settings import BASE_DIR
 import os
 
 
-BASE_DIR = os.getcwd()
+class File:
+    def __init__(self, name, is_dir):
+        self.name = name
+        self.is_dir = is_dir
 
 
 def open_dir(request, path: str):
@@ -12,12 +16,11 @@ def open_dir(request, path: str):
     """
     # links '.' and '..' are included to django (I think)
     path = os.path.join(BASE_DIR, path)
-    all_files = os.listdir(path)
-    dirs = [dir_ for dir_ in all_files if os.path.isdir(os.path.join(path, dir_))]
-    files = set(all_files) ^ set(dirs)
-    return render(request, 'navigation/index.html', context={'dirs': dirs,
-                                                             'files': files,
-                                                             'content': None})
+
+    files = [File(file, os.path.isdir(os.path.join(path, file))) for file in os.listdir(path)]
+    files.sort(key=lambda file: file.name)
+
+    return render(request, 'navigation/index.html', context={'files': files})
 
 
 def open_file(request, path: str):

@@ -18,11 +18,12 @@
         {% else %}
             <a href=".">./</a>
             <a href="..">../</a>
-            {% for dir in dirs %}
-                <a href='{{ dir }}/'>{{ dir }}</a>
-            {% endfor %}
             {% for file in files %}
-                <a href="{{ file }}">{{ file }}</a>
+                {% if file.is_dir %}
+                    <a href="{{ file.name }}/">{{ file.name }}/</a>
+                {% else %}
+                    <a href="{{ file.name }}">{{ file.name }}</a>
+                {% endif %}
             {% endfor %}
         {% endif %}
     </div>
