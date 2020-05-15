@@ -13,7 +13,7 @@ def go(request, path: str):
     # links '.' and '..' are included to django (I think)
     path = os.path.join(BASE_DIR, path)
     all_files = os.listdir(path)
-    dirs = [d for d in all_files if os.path.isdir(os.path.join(path, d))]
+    dirs = [dir_ for dir_ in all_files if os.path.isdir(os.path.join(path, dir_))]
     files = set(all_files) ^ set(dirs)
     return render(request, 'navigation/index.html', context={'dirs': dirs,
                                                              'files': files,

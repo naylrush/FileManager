@@ -19,14 +19,11 @@ class FileTree:
 
     def add_dir_at(self, path):
         path = split_path(path)
-        if len(path) == 0:
+        if not path:
             return self.files
         subdir = self.files
         for dir_ in path:
-            next_subdir = subdir.get(dir_, None)
-            if next_subdir is None:
-                next_subdir = subdir[dir_] = {}
-            subdir = next_subdir
+            subdir = subdir.setdefault(dir_, {})
         return subdir
 
     def add_file_at(self, path, real_path):
@@ -40,7 +37,7 @@ class FileTree:
         path = split_path(path)
         subdir = self.files
         for dir_ in path:
-            subdir = subdir.get(dir_, None)
+            subdir = subdir.get(dir_)
             if subdir is None:
                 return None
         return subdir
