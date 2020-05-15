@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+    <div style="display: flex; flex-direction: column">
+        {% if content is not None %}
+            <a href="..">Back</a>
+            <pre>{{ content }}</pre>
+        {% else %}
+            <a href=".">./</a>
+            <a href="..">../</a>
+            {% for dir in dirs %}
+                <a href='{{ dir }}/'>{{ dir }}</a>
+            {% endfor %}
+            {% for file in files %}
+                <a href="{{ file }}">{{ file }}
+            {% endfor %}
+        {% endif %}
+    </div>
+</body>
+
+</html>
