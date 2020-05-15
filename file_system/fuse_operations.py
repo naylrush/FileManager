@@ -1,7 +1,11 @@
 
 from errno import ENOENT, EROFS, EACCES
-from file import File
-from file_tree import FileTree
+try:
+    from .file import File
+    from .file_tree import FileTree
+except ImportError:
+    from file import File
+    from file_tree import FileTree
 from fuse import FuseOSError, LoggingMixIn, Operations
 from stat import S_IFDIR, S_IFREG
 import os

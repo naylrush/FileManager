@@ -1,5 +1,8 @@
 
-from file import File
+try:
+    from .file import File
+except ImportError:
+    from file import File
 import os
 
 

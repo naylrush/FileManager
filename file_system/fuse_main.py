@@ -1,6 +1,9 @@
 
 from fuse import FUSE
-from fuse_operations import FuseOperations
+try:
+    from .fuse_operations import FuseOperations
+except ImportError:
+    from fuse_operations import FuseOperations
 import argparse
 import logging
 import subprocess
