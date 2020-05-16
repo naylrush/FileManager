@@ -6,10 +6,12 @@ import logging
 import subprocess
 
 
+def umount(path):
+    subprocess.run(['umount', path], capture_output=True)
+
+
 def run_fuse(mount, source_dir):
-    if mount is None:
-        raise Exception("Mount destination required")
-    subprocess.run(['umount', mount])
+    umount(mount)
     FUSE(FuseOperations(mount, source_dir), mount,  foreground=True, allow_other=True)
 
 
