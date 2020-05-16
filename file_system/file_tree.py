@@ -10,8 +10,10 @@ def split_path(path):
 
 
 class FileTree:
-    def __init__(self, path=None):
-        self.files = {}
+    def __init__(self, path=None, *, files=None):
+        if files is None:
+            files = {}
+        self.files = files
         if path is not None:
             self.generate_fs_by(path)
 
@@ -53,3 +55,20 @@ class FileTree:
                 self.add_file_at(os.path.join(root[len(path):], name), file_real_path)
             for name in dirs:
                 self.add_dir_at(os.path.join(root, name)[len(path):])
+
+    def __str__(self):
+        return str(self.files)
+
+    def __eq__(self, other):
+        for key, value in self.files.items():
+            other_value = other.files.get(key)
+            if type(value) == type(other_value):
+                if isinstance(value, dict):
+                    if FileTree(files=value) != FileTree(files=other_value):
+                        return False
+            else:
+                return False
+        return True
+
+    def __ne__(self, other):
+        return not self == other

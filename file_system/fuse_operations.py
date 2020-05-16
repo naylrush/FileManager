@@ -19,6 +19,8 @@ class FuseConstants:
 
 
 class FuseOperations(LoggingMixIn, Operations):
+    use_ns = True
+
     def __init__(self, mount, source_dir=None):
         self.mount = mount
         self.files = FileTree(source_dir)
@@ -31,7 +33,7 @@ class FuseOperations(LoggingMixIn, Operations):
 
     def open(self, path, flags):
         file = self.files[path]
-        return os.open(file.real_path, os.O_RDONLY);
+        return os.open(file.real_path, os.O_RDONLY)
 
     def read(self, path, size, offset, fd):
         os.lseek(fd, offset, 0)
