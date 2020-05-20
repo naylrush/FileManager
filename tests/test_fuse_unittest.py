@@ -38,10 +38,13 @@ class TestRunFuse:
     @classmethod
     def setup_class(cls):
         cls.fuse_process.run()
-        sleep(0.5)
 
     def test_run(self):
-        pass
+        for _ in range(5):  # 5 tries for 1 second each
+            sleep(1)
+            if FileTree(config.FUSE_ROOT) != FileTree(files={}):
+                return
+        assert False
 
     def test_tree(self):
         assert FileTree(config.SOURCE_DIR) == FileTree(config.FUSE_ROOT)
