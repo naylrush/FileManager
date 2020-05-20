@@ -7,7 +7,7 @@ import subprocess
 
 
 def umount(path):
-    subprocess.run(['umount', path], capture_output=True)
+    subprocess.run(['umount', path], stderr=subprocess.PIPE)
 
 
 def run_fuse(mount, source_dir):
